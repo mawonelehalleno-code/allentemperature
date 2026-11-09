@@ -8,6 +8,5 @@ WARNING: Highest reading is above 60°C but not above 80°C.
 CRITICAL: Highest reading is above 80°C.
 What I learned
 I learned how to use Python functions, loops, conditional statements and lists.
-Author
-Your Mawoneleh Allen Junior 
+Author Mawoneleh Allen Junior 
 ND1 Mechatronics Engineering, YabaTech
