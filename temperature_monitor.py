@@ -1,4 +1,6 @@
-# Temperature Monitor and Alarm Checker
+#CTE123 Python Mini Project
+# Project: Temperature Monitor and Alarm Checker
+# Author: Mawoneleh Allen Junior 
 
 def get_temperature(message):
     while True:
