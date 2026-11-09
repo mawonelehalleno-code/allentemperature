@@ -1,90 +1,76 @@
-#CTE123 Python Mini Project
+# CTE123 Python Mini Project
 # Project: Temperature Monitor and Alarm Checker
-# Author: Mawoneleh Allen Junior 
+# Author: Mawoneleh Allen Junior
 
-def get_temperature(message):
-    while True:
-        try:
-            temperature = float(input(message))
-            return temperature
-        except ValueError:
-            print("Invalid input! Please enter a number.")
-
-
-# This function collects five temperature readings.
-def collect_readings():
+# Function to collect five temperature readings
+def get_temperature_readings():
     readings = []
 
-    print("\nEnter five temperature readings in Celsius.")
+    print("\nEnter 5 machine temperature readings.")
 
     while len(readings) < 5:
-        temperature = get_temperature(
-            f"Enter reading {len(readings) + 1}: "
-        )
-        readings.append(temperature)
+        try:
+            temperature = float(
+                input(f"Enter temperature reading {len(readings) + 1}: ")
+            )
+
+            if temperature < 0:
+                print("Invalid reading. Temperature cannot be negative.")
+            else:
+                readings.append(temperature)
+
+        except ValueError:
+            print("Invalid input! Please enter a number.")
 
     return readings
 
 
-# This function checks the temperature readings.
-def check_temperature(readings, safe_limit):
+# Function to analyse the temperature readings
+def analyse_temperature(readings):
+
     highest = max(readings)
     lowest = min(readings)
     average = sum(readings) / len(readings)
 
-    # Count readings that exceed the safe temperature limit.
-    high_readings = 0
+    safe_limit = 80
 
+    print("\n========== TEMPERATURE REPORT ==========")
+
+    print("All readings:", readings)
+    print("Highest temperature:", highest, "°C")
+    print("Lowest temperature:", lowest, "°C")
+    print("Average temperature:", round(average, 2), "°C")
+
+    # Check whether any reading exceeds the safe limit
     for temperature in readings:
         if temperature > safe_limit:
-            high_readings += 1
-
-    # Determine the machine's warning level.
-    if high_readings == 0:
-        status = "NORMAL"
-    elif high_readings <= 2:
-        status = "WARNING"
+            print("ALARM! Temperature exceeds the safe limit!")
+            break
     else:
-        status = "CRITICAL"
+        print("All readings are within the safe limit.")
 
-    # Display the temperature report.
-    print("\n========== TEMPERATURE REPORT ==========")
-    print("Temperature readings:", readings)
-    print(f"Highest temperature: {highest:.2f} °C")
-    print(f"Lowest temperature: {lowest:.2f} °C")
-    print(f"Average temperature: {average:.2f} °C")
-    print(f"Safe temperature limit: {safe_limit:.2f} °C")
-    print(f"Readings above safe limit: {high_readings}")
-    print(f"Machine status: {status}")
-
-    # Display an appropriate message.
-    if status == "NORMAL":
-        print("The machine is operating within the safe limit.")
-    elif status == "WARNING":
-        print("Warning! Some readings are above the safe limit.")
+    # Original feature: Machine condition status report
+    if highest <= 60:
+        print("Machine Status: NORMAL")
+    elif highest <= safe_limit:
+        print("Machine Status: WARNING")
     else:
-        print("CRITICAL! The machine may be overheating.")
-
-    print("========================================")
+        print("Machine Status: CRITICAL")
 
 
-# Main function that runs the program.
+# Main program
 def main():
-    print("========================================")
-    print("   TEMPERATURE MONITOR AND ALARM CHECKER")
-    print("========================================")
 
-    safe_limit = get_temperature(
-        "\nEnter the safe temperature limit (°C): "
-    )
+    print("====================================")
+    print(" TEMPERATURE MONITORING SYSTEM")
+    print("====================================")
 
-    readings = collect_readings()
+    readings = get_temperature_readings()
 
-    check_temperature(readings, safe_limit)
+    analyse_temperature(readings)
 
     print("\nTemperature monitoring completed.")
 
 
-# Start the program.
-if __name__ == "__main__":
-    main()
+# Run the program
+main()
